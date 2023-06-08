@@ -8,7 +8,7 @@ const bip39 = require('bip39');
 dotenv.config();
 
 const apiKey = '8e0eb59849164438bd4128ea9a5c7056';
-const apiUrl = 'https://api.blockcypher.com/v1/btc/test3?token=8e0eb59849164438bd4128ea9a5c7056';
+const apiUrl = `https://api.blockcypher.com/v1/btc/test3?token=$%b5d3b6d6a0134eb1957c50acdadc94a0%7D`;
 
 
 
@@ -101,29 +101,34 @@ async function getBalance(walletName) {
 
 // Function to get the Bitcoin transactions of a wallet
 async function getTransactions(walletName) {
-    try {
-      const walletData = await fs.promises.readFile(`${walletName}.json`, 'utf-8');
-      const { address } = JSON.parse(walletData);
-  
-      const response = await axios.get(`${apiUrl}/addrs/${address}/full`);
-      const { txs } = response.data;
-  
-      console.log(`Transactions of Wallet '${walletName}':`);
-      if (txs.length === 0) {
-        console.log('No transactions found.');
-      } else {
-        txs.forEach(tx => {
-          console.log(`- Transaction ID: ${tx.txid}`);
-          console.log(`  Confirmations: ${tx.confirmations}`);
-          console.log(`  Value: ${tx.value} BTC`);
-          console.log(`  Date: ${new Date(tx.received).toUTCString()}`);
-          console.log(''); // Add a newline for readability
-        });
-      }
-    } catch (error) {
-      console.error('An error occurred while fetching the transactions:', error.message);
+  try {
+    const walletData = await fs.promises.readFile(`${walletName}.json`, 'utf-8');
+    const { address } = JSON.parse(walletData);
+
+    const response = await axios.get(`${apiUrl}/addrs/${address}/full`);
+    const { txs } = response.data;
+
+    console.log(`Transactions of Wallet '${walletName}':`);
+    if (txs.length === 0) {
+      console.log('No transactions found.');
+    } else {
+      txs.forEach(tx => {
+        const { txid, confirmations, outputs, received } = tx;
+        const value = outputs.reduce((acc, output) => acc + output.value, 0);
+        const valueBTC = value / 1e8; // Convert Satoshis to BTC
+        console.log(`  Confirmations: ${confirmations}`);
+        console.log(`  Value: ${valueBTC} BTC`);
+        console.log(`  Date: ${new Date(received).toUTCString()}`);
+        console.log(''); // Add a newline for readability
+      });
     }
+  } catch (error) {
+    console.error('An error occurred while fetching the transactions:', error.message);
   }
+}
+
+
+
   
 
 // Function to generate an unused Bitcoin address for a wallet

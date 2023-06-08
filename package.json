@@ -1,0 +1,24 @@
+{
+  "name": "screening",
+  "version": "1.0.0",
+  "description": "This project is a Node.js script that provides various functionalities for managing Bitcoin wallets using the BlockCypher API. It allows users to create new wallets, import existing wallets using BIP39 mnemonics, list all stored wallets, retrieve the Bitcoin balance of a wallet, fetch the list of Bitcoin transactions for a wallet, and generate unused Bitcoin addresses. The script uses the axios library for making HTTP requests to the BlockCypher API and the bitcoinjs-lib library for working with Bitcoin wallets and addresses. The project aims to provide a command-line interface for easy interaction and management of Bitcoin wallets on the Bitcoin testnet. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AbhinawRatan/Cypherock_screening.git"
+  },
+  "author": "Abhinaw Ratan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AbhinawRatan/Cypherock_screening/issues"
+  },
+  "homepage": "https://github.com/AbhinawRatan/Cypherock_screening#readme",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "bitcoinjs-lib": "^6.1.2",
+    "dotenv": "^16.1.4"
+  }
+}

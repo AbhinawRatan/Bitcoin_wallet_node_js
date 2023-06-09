@@ -7,8 +7,8 @@ const bip39 = require('bip39');
 // Load environment variables from .env file
 dotenv.config();
 
-const apiKey = '8e0eb59849164438bd4128ea9a5c7056';
-const apiUrl = `https://api.blockcypher.com/v1/btc/test3?token=$%b5d3b6d6a0134eb1957c50acdadc94a0%7D`;
+const apiKey = process.env.API_KEY;
+const apiUrl = `https://api.blockcypher.com/v1/btc/test3?token=${apiKey}`;
 
 
 
@@ -145,6 +145,7 @@ async function generateAddress(walletName) {
     console.error('An error occurred while generating the address:', error.message);
   }
 }
+
 
 // Process command-line arguments
 const [command, walletName, mnemonic] = process.argv.slice(2);
